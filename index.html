@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Jivitadoulia - Mental Health Website</title>
+  <style>
+    /* CSS Styling */
+    body {
+      background-color: #FFFFFF;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    
+    header {
+      background-color: #fbdc60;
+      text-align: center;
+      padding: 40px;
+    }
+    
+    header h1 {
+      color: #000000;
+      font-size: 60px;
+      text-transform: uppercase;
+      margin: 0;
+      font-family: 'Alegreya Sans SC', sans-serif;
+    }
+    
+    section {
+      background-color: #FFFFFF;
+      padding: 40px;
+      margin-bottom: 40px;
+      border-radius: 10px;
+    }
+    
+    section h2 {
+      color: #000000;
+      font-size: 28px;
+      margin: 0 0 20px 0;
+    }
+    
+    footer {
+      background-color: #fbdc60;
+      padding: 20px;
+      text-align: center;
+      color: #000000;
+      font-size: 14px;
+      font-family: Arial, sans-serif;
+    }
+    
+    .artistic-image {
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    .artistic-quote {
+      font-size: 24px;
+      font-style: italic;
+      color: #000000;
+      margin: 20px 0;
+    }
+    
+    .horizontal-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    
+    .horizontal-content section {
+      width: calc(33.33% - 20px);
+      margin-bottom: 20px;
+    }
+    
+    .booking-form {
+      max-width: 400px;
+      margin: 0 auto;
+    }
+    
+    .booking-form input[type="text"],
+    .booking-form input[type="email"],
+    .booking-form select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    
+    .booking-form input[type="submit"] {
+      background-color: #fbdc60;
+      color: #000000;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    
+    .booking-success {
+      color: green;
+      margin-top: 20px;
+    }
+  </style>
+  <script src="https://js.stripe.com/v3/"></script>
+  <script>
+    document.getElementById("appointmentForm").addEventListener("submit", function(e) {
+      e.preventDefault(); // Prevent form submission
+
+      // Send the form data to the server-side script for email sending
+      fetch("send_email.php", {
+        method: "POST",
+        body: new FormData(e.target)
+      })
+      .then(response => response.text())
+      .then(data => {
+        // Display success message
+        document.getElementById("bookingSuccess").style.display = "block";
+        document.getElementById("bookingSuccess").innerHTML = data;
+      })
+      .catch(error => {
+        // Display error message
+        document.getElementById("bookingSuccess").style.display = "block";
+        document.getElementById("bookingSuccess").innerHTML = "Oops! Something went wrong. Please try again later.";
+      });
+    });
+  </script>
+</head>
+<body>
+  <!-- Navigation Menu -->
+  <nav>
+    <!-- Include navigation links here -->
+  </nav>
+  <!-- Header -->
+  <header>
+    <h1 style="color: #000000; font-size: 60px; text-transform: uppercase; margin: 0; font-family: 'Alegreya Sans SC', sans-serif;">Jivitadoulia</h1>
+    <p style="color: #000000; font-size: 24px;">Embrace the Realm Within</p>
+  </header>
+
+  <!-- About Us Section -->
+  <section>
+    <h2>About Us</h2>
+    <p style="font-style: italic;">At Jivitadoulia, we believe that life is an extraordinary journey filled with endless possibilities. Our name, derived from Sanskrit and Greek, embodies the essence of our mission. "Jivita" celebrates the sacredness of life, emphasizing the importance of cherishing every moment and embracing the inherent beauty within. "Doulia" symbolizes the transformative power of purposeful work and the pursuit of a fulfilling existence.</p>
+    <p style="font-style: italic;">We are dedicated to guiding individuals on a path of self-discovery and empowerment. With compassion and expertise, our team of experienced therapists nurtures emotional well-being and fosters personal growth. We provide a safe and supportive environment where individuals can explore their inner realm, overcome obstacles, and unlock their true potential.</p>
+    <p style="font-style: italic;">At Jivitadoulia, we are passionate about helping you navigate life's challenges and embrace your authentic self. Our holistic approach combines evidence-based techniques with a deep understanding of your unique journey. Together, we will embark on a transformative exploration, empowering you to create a life of purpose, fulfillment, and inner harmony.</p>
+    <p style="font-style: italic;">Join us at Jivitadoulia and let us inspire and support you on your journey of self-discovery and personal empowerment.</p>
+  </section>
+
+  <!-- Booking Section -->
+  <section id="booking">
+    <h2>Book Now</h2>
+    <div class="booking-form">
+      <form action="https://formspree.io/f/xgejwqgq" method="POST" id="appointmentForm">
+        <label>
+          <input type="text" name="name" placeholder="Full Name" required>
+        </label>
+        <label>
+          <input type="email" name="email" placeholder="Email Address" required>
+        </label>
+        <label>
+          <input type="text" name="dob" placeholder="Date of Birth" required>
+        </label>
+        <label>
+          <select name="service" required>
+            <option value="" selected disabled>Select Service</option>
+            <option value="Counselling">Counselling</option>
+            <option value="Career Counselling">Career Counselling</option>
+          </select>
+        </label>
+        <button type="submit">Send</button>
+      </form>
+      <div id="bookingSuccess" class="booking-success" style="display: none;"></div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <!-- Include footer content here -->
+  </footer>
+</body>
+</html>
